@@ -34,3 +34,15 @@ http://overthewire.org/wargames/bandit/
 * [Level 24 -> 25](bandit/bandit25.md)
 * [Level 25 -> 26](bandit/bandit26.md)
 
+## Leviathan
+
+http://overthewire.org/wargames/leviathan/
+
+* [Level 0 -> 1](leviathan/leviathan1.md)
+* [Level 1 -> 2](leviathan/leviathan2.md)
+* [Level 2 -> 3](leviathan/leviathan3.md)
+* [Level 3 -> 4](leviathan/leviathan4.md)
+* [Level 4 -> 5](leviathan/leviathan5.md)
+* [Level 5 -> 6](leviathan/leviathan6.md)
+* [Level 6 -> 7](leviathan/leviathan7.md)
+* [Level 7](leviathan/congratulations.md)
